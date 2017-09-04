@@ -22,7 +22,66 @@ public class DataStructure {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        GetFash();
+        EvaluateParenthesis();
+    }
+    
+    public static void EvaluateExpression(){
+        String Expression;
+        int i;
+        Pila pila;
+        pila = new Pila();
+        
+        Expression = JOptionPane.showInputDialog("Teclea la expresión a validar");
+        
+        i = 0;
+        String opening = "({[";
+        String closing = ")}]";
+        char current;
+        char verify;
+        
+        while((i < Expression.length()) && (pila.getErr() == 0)){
+            current = Expression.charAt(i);
+            if (opening.indexOf(current) != -1) {
+                pila.insert(current);
+            }
+            if (closing.indexOf(current) != -1) {
+                verify = pila.pop();
+                if (opening.indexOf(verify) == closing.indexOf(current)) {
+                    
+                }
+            }
+        }
+    }
+    
+    public static void EvaluateParenthesis(){
+    String Expression;
+        int i;
+        Pila pila;
+        pila = new Pila();
+        
+        Expression = JOptionPane.showInputDialog("Teclear la expresión a validar:");
+        
+        i = 0;
+        while((i < Expression.length()) && (pila.getErr() == 0)){
+            switch(Expression.charAt(i)){
+                case '(':
+                    pila.insert(Expression.charAt(i));
+                    break;
+                case ')':
+                    pila.pop();
+                    break;  
+            }
+            i++;
+        }
+        
+        if ((!pila.PilaEmpty()) && (pila.getErr() == 0)) {
+            message(3);
+        }
+        else{
+            message(pila.getErr());
+        }
+        
+        System.exit(0);
     }
     
     public static void GetMean()
@@ -207,6 +266,25 @@ public class DataStructure {
         }   
         System.out.println("El número mayor es: " + may);
         System.out.println("El número menor es: " + men);
+    }
+
+    private static void message(int error) {
+        String Message = "";
+        switch(error){
+            case 0:
+                Message = "Paréntesis Equilibrados";
+                break;
+            case 1:
+                Message = "Pila llena";
+                break;
+            case 2:
+                Message = "Existen más paréntesis derechos que izquierdos";
+                break;
+            case 3:
+                Message = "Existen más paréntesis izquierdos que derechos";
+                break;
+        }
+        JOptionPane.showMessageDialog(null, Message, "Resultado", JOptionPane.PLAIN_MESSAGE);
     }
     
 }
