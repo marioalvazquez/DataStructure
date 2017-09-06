@@ -22,8 +22,51 @@ public class DataStructure {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        EvaluateParenthesis();
+        TryColaCircular();
     }
+    
+    public static void TryColaCircular(){
+        int adder = 0;
+        String added;
+        Scanner reader = new Scanner(System.in);
+        
+        ColaCircular cola = new ColaCircular(10);
+        
+        System.out.println("Bienvenido al sistema de colas circulares");
+        while(adder < 7 ){
+            System.out.println("Por favor ingrese un nombre para agregar a la cola:");
+            added = reader.nextLine();
+            cola.Insert(added);
+            if (cola.getErr() == 0) {
+                System.out.println("Haz añadido a la cola satisfactoriamente el elemento: " + added );
+            }
+            adder++;
+        }
+        adder = 0;
+        System.out.println("Ahora, vamos a eliminar algunos elementos de su cola");
+        while(adder < 4){
+            added = cola.Delete();
+            if (cola.getErr() == 0) {
+                System.out.println("Hemos quitado de su cola a " + added);
+            }
+            adder++;
+        }
+        adder = 0;
+        System.out.println("Ahora, vuelva a añadir otros 5 elementos");
+        while(adder < 5){
+            System.out.println("Ingrese un nuevo nombre:");
+            added = reader.nextLine();
+            cola.Insert(added);
+            if (cola.getErr() == 0) {
+                System.out.println("Ha añadido a su cola a: " + added);
+            }
+            adder++;
+        }
+        cola.PrintAll();
+        
+        
+    }
+    
     
     public static void EvaluateExpression(){
         String Expression;
@@ -46,11 +89,19 @@ public class DataStructure {
             }
             if (closing.indexOf(current) != -1) {
                 verify = pila.pop();
-                if (opening.indexOf(verify) == closing.indexOf(current)) {
-                    
+                if (opening.indexOf(verify) != closing.indexOf(current)) {
+                    break;
                 }
             }
+            i++;
         }
+        if (!pila.PilaEmpty()) {
+            System.out.println("Expresión desequilibrada");
+        }
+        else{
+            System.out.println("Expresión equilibrada");
+        }
+        System.exit(0);
     }
     
     public static void EvaluateParenthesis(){
